@@ -1,0 +1,30 @@
+#root {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  padding-top: 10px;
+  margin: 20px;
+  display: flex;
+  flex: 1 1 calc(33% - 40px);
+  justify-content: center;
+}
+
+.pet-image {
+  padding: 25px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.card-title {
+
+}
+
+.footer-type {
+  text-align: end;
+}
