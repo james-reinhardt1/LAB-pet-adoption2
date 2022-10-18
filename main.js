@@ -302,7 +302,7 @@ const cardsOnDom = (array) => {
     <div> <img src="${pet.imageUrl}" onerror="this.src='images/missingimg.jpeg'" class ="img-fluid w-100" alt="pet to adopt"></div>
     <p class="list-group-item pet-color card">${pet.color}</p>
     <p class="list-group-item special-skill card">${pet.specialSkill}</p>
-  <footer class="footer-type ${pet.type.toUpperClass()}">${pet.type.toUpperCase()}</footer>
+  <footer class="footer-type ${pet.type.toUpperCase()}">${pet.type.toUpperCase()}</footer>
 </div> 
     `;
   }
@@ -344,3 +344,27 @@ showDino.addEventListener("click", () => {
 showAllPets.addEventListener("click", () => {
   cardsOnDom(pets);
 });
+
+// 1. select/target the form on the DOM
+const form = document.querySelector('form');
+
+const createPet = (event) => {
+  event.preventDefault(); // EVERY TIME YOU CREATE A FORM
+  
+  // 2. create a function that grabs all the values from the form, pushes the new object to the array, then repaints the DOM with the new teammate
+const newPetObj = { //grabs the values
+  id: pets.length + 1,
+  name: document.querySelector("#name").value,
+  color: document.querySelector("#color").value,
+  specialSkill: document.querySelector("#specialSkill").value,
+  type: document.querySelector("#type").value.toLowerCase(),
+  imageUrl: document.querySelector("#imageUrl").value
+  }
+
+  console.log(newPetObj);
+  pets.push(newPetObj); //pushes the object
+  cardsOnDom(pets); //refreshes DOM with new pet
+  form.reset(); //resets the form 
+}
+
+form.addEventListener('submit', createPet);
