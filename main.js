@@ -277,13 +277,18 @@ for (let i = 0; i < pets.length; i++) {
   const pet = pets[i];
   const bootStrapCardString = `
   <div class="card" style="width: 18rem;">
-      <h5 class="card-title">${pet.name}</h5>
-    <div><img src="${pet.imageUrl}" onerror="this.src='images/missingimg.jpeg'" class ="img-fluid w-100" alt="pet to adopt">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">${pet.specialSkill}</li>
+      <h5 class="card-header">${pet.name}</h5>
+    <div>
+      <img src="${pet.imageUrl}" onerror="this.src='images/missingimg.jpeg'" class ="img-fluid w-100" alt="pet to adopt">
     </div>
+    <div>
+      <ul class="list-group list-group-flush">
+     <li class="list-group-item">${pet.specialSkill}</li>
+    </div>
+    <div>
       <li class="list-group-item">${pet.type}</li>
-    </ul>
+      <button class="btn btn-success" id="delete--${pet.id}">Delete</button>
+    </div>
   </div>`;
   rootDiv.innerHTML += bootStrapCardString;
 };
@@ -296,16 +301,21 @@ const renderToDom = (divId, htmlToRender) => {
 const cardsOnDom = (array) => {
   let domString = "";
   for (const pet of array) {
+    
     domString += `
     <div class="card" style="width: 18rem;">
-    <h5 class="pet-name">${pet.name.toUpperCase()}</h5>
-    <div> <img src="${pet.imageUrl}" onerror="this.src='images/missingimg.jpeg'" class ="img-fluid w-100" alt="pet to adopt"></div>
+    <h5 class="card-header">${pet.name.toUpperCase()}</h5>
+    <div> <img src="${pet.imageUrl}" onerror="this.src='images/missingimg.jpeg'" class ="img-fluid w-100" alt="a ${pet.type} you need to adopt"></div>
     <p class="list-group-item pet-color card">${pet.color}</p>
     <p class="list-group-item special-skill card">${pet.specialSkill}</p>
+    <button class="btn btn-success" id="delete--${pet.id}">
+    Delete </button>
   <footer class="footer-type ${pet.type.toUpperCase()}">${pet.type.toUpperCase()}</footer>
-</div> 
-    `;
-  }
+</div> `;
+  };
+
+
+
   renderToDom("#root", domString);
 }; //Get each card on the DOM
 
@@ -348,8 +358,8 @@ showAllPets.addEventListener("click", () => {
 // 1. select/target the form on the DOM
 const form = document.querySelector('form');
 
-const createPet = (event) => {
-  event.preventDefault(); // EVERY TIME YOU CREATE A FORM
+const createPet = (e) => { //condition 
+  e.preventDefault(); // EVERY TIME YOU CREATE A FORM
   
   // 2. create a function that grabs all the values from the form, pushes the new object to the array, then repaints the DOM with the new teammate
 const newPetObj = { //grabs the values
@@ -368,3 +378,32 @@ const newPetObj = { //grabs the values
 }
 
 form.addEventListener('submit', createPet);
+
+
+
+// DELETE
+// 1. target the root div
+const app = document.querySelector("#root");
+
+// 2. add an event listener to compare
+app.addEventListener('click', (e) => {
+
+  // 3. check e.target.id includes "delete"
+  if (e.target.id.includes("delete")) {
+    const [, id] = e.target.id.split("--");
+
+// 4. add logic to remove from array
+const index = pets.findIndex(e => e.id === Number(id));
+pets.splice(index, 1);
+
+// 5. Reprint the DOM wiconst app = document.querySelector("#app"); th the updated array
+cardsOnDom(pets);
+  }
+});
+
+const startApp = () => {
+  cardsOnDom(pets);
+  e(); // ALWAYS LAST
+}
+
+startApp();
