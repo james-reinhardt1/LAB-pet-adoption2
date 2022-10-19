@@ -286,6 +286,7 @@ for (let i = 0; i < pets.length; i++) {
      <li class="list-group-item">${pet.specialSkill}</li>
     </div>
     <div>
+      <ul class="list-group list-group-flush">
       <li class="list-group-item">${pet.type}</li>
       <button class="btn btn-success" id="delete--${pet.id}">Delete</button>
     </div>
